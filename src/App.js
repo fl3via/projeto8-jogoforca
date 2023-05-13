@@ -44,25 +44,66 @@ export default function App() {
 
   }
 
+  function letraJaClicada(letra) {
+    return palavraSorteada.indexOf(letra) !== -1 ||
+      palavraSorteada.indexOf(letra.toUpperCase()) !== -1 ||
+      palavraSorteada.indexOf(letra.toLowerCase()) !== -1;
+  }
 
+  function substituirUnderlinePorLetra(letra) {
+    let novaPalavraDoJogo = [...palavraDoJogo];
+
+    for (let i = 0; i < palavraSorteada.length; i++) {
+      if (palavraSorteada[i] === letra ||
+        palavraSorteada[i].toUpperCase() === letra ||
+        palavraSorteada[i].toLowerCase() === letra) {
+        novaPalavraDoJogo[i] = palavraSorteada[i];
+      }
+    }
+
+    setPalavraDoJogo(novaPalavraDoJogo);
+  }
+
+  function handleLetterClick(letra) {
+    if (palavraSorteada.includes(letra)) {
+      const novaPalavraDoJogo = palavraDoJogo.map((letraAtual, indice) => {
+        if (palavraSorteada[indice] === letra) {
+          return letra;
+        } else {
+          return letraAtual;
+        }
+      });
+      setPalavraDoJogo(novaPalavraDoJogo);
+    } else {
+      setErros(erros + 1);
+    }
+  
+
+    if (palavraSorteada.indexOf(letra) !== -1 ||
+      palavraSorteada.indexOf(letra.toUpperCase()) !== -1 ||
+      palavraSorteada.indexOf(letra.toLowerCase()) !== -1) {
+      substituirUnderlinePorLetra(letra);
+    } else {
+      setErros(erros + 1);
+    }
+  }
 
   return (
     <div className="container">
       <div className="tela">
-        <img src={imagens[erros]} />
-        <div className="button"> <button
+        <img src={imagens[erros]} data-test="game-image" />
+        <div className="button"> <button data-test="choose-word"
           onClick={iniciarJogo}
           className="escolher"
         >Escolher Palavra</button></div>
-        <h1>{palavraDoJogo}</h1>
+        <h1  data-test="word">{palavraDoJogo}</h1>
       </div>
 
       <div className="caixa-letras">
         {alfabeto.map((letra) => (
-          <button className="caixa" key={letra} >{letra}</button>))} </div>
-    </div>
-
-  );
+          <button className="caixa" key={letra}  data-test="letter" 
+          onClick={() => handleLetterClick(letra)}
+      disabled={palavraDoJogo.includes(letra)}
+          >{letra}</button>))} </div>
+    </div>)
 }
-
-
