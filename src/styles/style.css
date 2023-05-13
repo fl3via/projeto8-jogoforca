@@ -1,0 +1,72 @@
+img {
+    width: 400px;
+    height: 466px;
+    margin-left: 38px;
+}
+
+.tela {
+    display: flex;
+    align-items: flex-end;
+    width: 700px;
+    margin-bottom: 50px;
+    position: relative;
+    justify-content: space-between;
+}
+
+.escolher {
+    background-color: #27ae60;
+    border-radius: 8px;
+    border-style: none;
+    box-shadow: rgba(39, 174, 96, .15) 0 4px 9px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 15px 20px;
+    text-align: center;
+    position: absolute;
+    right: 0;
+    top: 30px;
+    min-width: 150px;
+}
+
+.button {
+    display: flex;
+    justify-content: end;
+    margin-top: 59px;
+    margin-right: 59px;
+}
+
+.caixa {
+    width: 40px;
+    height: 40px;
+    background-color: #E1ECF4;
+    border: 1px solid #7AA7C7;
+    border-radius: 3px;
+    text-transform: uppercase;
+}
+
+.caixa-letras {
+    width: 600px;
+    height: 91px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    font-size: 40px;
+    margin-right: 5px;
+    font-family: "Segoe UI";
+}
