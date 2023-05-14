@@ -17,10 +17,14 @@ export default function App() {
   const [erros, setErros] = useState(0)
   const [palavraSorteada, setPalavraSorteada] = useState([])
   const [palavraDoJogo, setPalavraDoJogo] = useState([])
+  const [letrasClicadas, setLetrasClicadas] = useState([]);
+  const [jogoIniciado, setJogoIniciado] = useState(false);
+
 
   function iniciarJogo() {
     setErros(0)
     sortearPalavra()
+    setJogoIniciado(true);
   }
 
   function sortearPalavra() {
@@ -65,28 +69,19 @@ export default function App() {
   }
 
   function handleLetterClick(letra) {
-    if (palavraSorteada.includes(letra)) {
-      const novaPalavraDoJogo = palavraDoJogo.map((letraAtual, indice) => {
-        if (palavraSorteada[indice] === letra) {
-          return letra;
-        } else {
-          return letraAtual;
-        }
-      });
-      setPalavraDoJogo(novaPalavraDoJogo);
-    } else {
-      setErros(erros + 1);
+    if (letrasClicadas.includes(letra)) {
+      return;
     }
-  
+    setLetrasClicadas([...letrasClicadas, letra]); 
 
-    if (palavraSorteada.indexOf(letra) !== -1 ||
-      palavraSorteada.indexOf(letra.toUpperCase()) !== -1 ||
-      palavraSorteada.indexOf(letra.toLowerCase()) !== -1) {
+    if (palavraSorteada.includes(letra)) {
       substituirUnderlinePorLetra(letra);
     } else {
       setErros(erros + 1);
     }
   }
+
+  
 
   return (
     <div className="container">
@@ -101,9 +96,10 @@ export default function App() {
 
       <div className="caixa-letras">
         {alfabeto.map((letra) => (
-          <button className="caixa" key={letra}  data-test="letter" 
+          <button className="caixa" key={letra}  data-test="letter"
           onClick={() => handleLetterClick(letra)}
-      disabled={palavraDoJogo.includes(letra)}
+          disabled={!jogoIniciado || letrasClicadas.includes(letra)}
+          
           >{letra}</button>))} </div>
     </div>)
 }
