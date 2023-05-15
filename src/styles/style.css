@@ -70,3 +70,16 @@ h1 {
     margin-right: 5px;
     font-family: "Segoe UI";
 }
+
+.acertou {
+    color: green;
+  }
+  
+  .errou {
+    color: red;
+  }
+  
+
+.preto {
+    color: black;
+}

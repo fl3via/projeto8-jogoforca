@@ -21,10 +21,14 @@ export default function App() {
   const [jogoIniciado, setJogoIniciado] = useState(false);
 
 
+
+
   function iniciarJogo() {
     setErros(0)
     sortearPalavra()
-    setJogoIniciado(true);
+    setJogoIniciado(true)
+  
+
   }
 
   function sortearPalavra() {
@@ -48,15 +52,10 @@ export default function App() {
 
   }
 
-  function letraJaClicada(letra) {
-    return palavraSorteada.indexOf(letra) !== -1 ||
-      palavraSorteada.indexOf(letra.toUpperCase()) !== -1 ||
-      palavraSorteada.indexOf(letra.toLowerCase()) !== -1;
-  }
 
   function substituirUnderlinePorLetra(letra) {
     let novaPalavraDoJogo = [...palavraDoJogo];
-
+  
     for (let i = 0; i < palavraSorteada.length; i++) {
       if (palavraSorteada[i] === letra ||
         palavraSorteada[i].toUpperCase() === letra ||
@@ -64,24 +63,33 @@ export default function App() {
         novaPalavraDoJogo[i] = palavraSorteada[i];
       }
     }
-
+  
     setPalavraDoJogo(novaPalavraDoJogo);
+  
+    if (novaPalavraDoJogo.join('') === palavraSorteada.join('')) {
+      document.querySelector('[data-test="word"]').classList.add('acertou');
+    }
   }
+  
 
   function handleLetterClick(letra) {
-    if (letrasClicadas.includes(letra)) {
-      return;
-    }
-    setLetrasClicadas([...letrasClicadas, letra]); 
-
-    if (palavraSorteada.includes(letra)) {
-      substituirUnderlinePorLetra(letra);
-    } else {
-      setErros(erros + 1);
-    }
+  if (letrasClicadas.includes(letra)) {
+    return;
   }
 
-  
+  if (palavraSorteada.join('') === palavraDoJogo.join('') + letra) {
+    document.querySelector('[data-test="word"]').classList.add('errou');
+  }
+
+  setLetrasClicadas([...letrasClicadas, letra]);
+
+  if (palavraSorteada.includes(letra)) {
+    substituirUnderlinePorLetra(letra);
+  } else {
+    setErros(erros + 1);
+  }
+}
+
 
   return (
     <div className="container">
@@ -96,10 +104,12 @@ export default function App() {
 
       <div className="caixa-letras">
         {alfabeto.map((letra) => (
-          <button className="caixa" key={letra}  data-test="letter"
-          onClick={() => handleLetterClick(letra)}
-          disabled={!jogoIniciado || letrasClicadas.includes(letra)}
-          
+          <button className="caixa" key={letra} data-test="letter"
+            onClick={() => handleLetterClick(letra)}
+
+            disabled={!jogoIniciado || letrasClicadas.includes(letra)}
+
+
           >{letra}</button>))} </div>
     </div>)
 }
